@@ -9,6 +9,8 @@ import csv
 session = requests.session()
 session.mount('http://', HTTPAdapter(max_retries=3))
 session.mount('https://', HTTPAdapter(max_retries=3))
+
+#获取品牌ID
 def get_brand():
     print('-------开始获取品牌Id--------')
     brand_list = []
@@ -23,6 +25,7 @@ def get_brand():
         print('获取品牌ID失败')
     return brand_list
 
+#获取口碑评分
 def get_score(good_id):
     score = ''
     url = 'https://api.jddmoto.com/carport/goods/praise/v1/score/{0}'.format(str(good_id))
@@ -34,6 +37,7 @@ def get_score(good_id):
         score = '暂无'
     return score
 
+#获取商品信息
 def get_good(brand_list):
     if len(brand_list):
         good_list = []
@@ -75,7 +79,9 @@ def get_good(brand_list):
                     break
 
         return good_list
-
+    
+    
+#写入CSV
 def write_data(good_list):
     print('---------开始写入--------')
     f = open('摩托.csv', 'w', encoding='utf-8',newline='')
